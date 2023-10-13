@@ -1,12 +1,11 @@
--- with weekday_avg as
--- select
---     -- base_currency,
---     -- avg(gbp) as avg_gbp
---     -- avg(usd) as avg_usd
---     -- avg(inr) as avg_inr
--- from {{ref('prep_temp')}}
--- -- group by base_currency
--- )
-
--- select *
--- from weekday_avg
+WITH avg_temp_per_weekday AS (
+    SELECT
+        TO_CHAR(date, 'Day') AS weekday,
+        AVG(avgtemp_c) AS average_temperature
+    FROM
+        prep_temp
+    GROUP BY
+        TO_CHAR(date, 'Day')
+)
+SELECT *
+FROM avg_temp_per_weekday
